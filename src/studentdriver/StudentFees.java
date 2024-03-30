@@ -77,5 +77,11 @@ public abstract class StudentFees {
         return PER_CREDIT_Fee;
     }
 
+    public abstract double getPayableAmount ();
     
+    public String toString ()
+    {
+        return null;
+    }
+        
 }
