@@ -41,7 +41,7 @@ public class StudentDriver {
                 if(a.length == 6){
                     GraduateStudent student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), a[5], Integer.parseInt(a[3]));
                     students[count] = student;
-                }else{
+                }else if(a[4].equals("false")){
                     GraduateStudent student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), "", Integer.parseInt(a[3]));
                     students[count] = student;
                 }
