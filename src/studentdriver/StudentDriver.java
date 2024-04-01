@@ -14,7 +14,7 @@ public class StudentDriver {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         StudentFees [] students = new StudentFees[12];
         File inputFile = new File("input.csv");
-        Scanner studentFile = new Scanner(inputFile);
+        Scanner file = new Scanner(inputFile);
         
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the no of UG students: ");
@@ -25,36 +25,37 @@ public class StudentDriver {
         Scanner input3 = new Scanner(System.in);
         System.out.print("Enter the no of online students: ");
         int num3 = input3.nextInt();
-        
-        BufferedReader reader;
-        reader = new BufferedReader(new FileReader("input.csv"));
-        String file = reader.readLine();
+  
         int count = 0;
         
-        while(file != null){
+        while(file.hasNext() == true){
             String[] a;
             if(count < num){
-                a = file.split(",");
-                StudentFees student = new UGStudent(a[1], Integer.parseInt(a[0]),Boolean.parseBoolean(a[2]),Boolean.parseBoolean(a[4]),Double.parseDouble(a[5]),Integer.parseInt(a[3])); 
+                a = file.nextLine().split(",");
+                UGStudent student = new UGStudent(a[1],Integer.parseInt(a[0]),Boolean.parseBoolean(a[2]),Boolean.parseBoolean(a[4]),Double.parseDouble(a[5]),Integer.parseInt(a[3])); 
+                students[count] = student;
                 //String studentName, int studentID, boolean isEnrolled,  boolean hasScholarship, 
                 //double scholarshipAmount, int coursesEnrolled
-                students[count] = student;
             }else if(count < num2 + num){
-                a = file.split(",");
-                StudentFees student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), a[5], Integer.parseInt(a[3]));
+                a = file.nextLine().split(",");
+                if(a.length == 6){
+                    GraduateStudent student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), a[5], Integer.parseInt(a[3]));
+                    students[count] = student;
+                }else{
+                    GraduateStudent student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), "", Integer.parseInt(a[3]));
+                    students[count] = student;
+                }
                 //String studentName, int studentID, boolean isEnrolled, boolean isGraduateAssistant,
                 //String GraduateAssistantType, int coursesEnrolled
-                students[count] = student;
             }else if (count < num3 + num2 + num){
-                a = file.split(",");
-                StudentFees student = new OnlineStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Integer.parseInt(a[4]));
+                a = file.nextLine().split(",");
+                OnlineStudent student = new OnlineStudent(a[1],Integer.parseInt(a[0]),Boolean.parseBoolean(a[2]),Integer.parseInt(a[3]));
+                
+                students[count] = student;
                 //tring studentName, int studentID, boolean isEnrolled, int noOfMonths) {
                 //super(studentName, studentID, isEnrolled
-                students[count] = student;
             }
             count += 1;
-            
-            file = reader.readLine();
         }
         
         count = 0;
@@ -66,17 +67,17 @@ public class StudentDriver {
                 if(count < num - num + 1){
                     System.out.println("**********Undergraduate students list**********");
                 }
-                System.out.println(x);                
+                System.out.println(x + "\n");                
             }else if(count < num2 + num){
                 if(count == num){
                     System.out.println("**********Graduate students list**********");
                 }
-                System.out.println(x);
+                System.out.println(x + "\n");
             }else if (count < num3 + num2 + num){
                 if(count == num2 + num){
                     System.out.println("**********online students list**********");
                 }
-                System.out.println(x);
+                System.out.println(x + "\n");
             }
             count += 1;
         }
