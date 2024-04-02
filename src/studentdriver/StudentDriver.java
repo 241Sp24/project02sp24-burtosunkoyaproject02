@@ -81,6 +81,29 @@ public class StudentDriver {
             }
             count += 1;
         }
+        
+        //Avg UG Student Fee
+        System.out.println("**********Undergraduate Students details**********");
+        
+        double total = 0;
+        double average = 0;
+        
+        for (StudentFees u: students)
+        {
+            if (u instanceof UGStudent){
+                if (u.getPayableAmount()== 0)
+                {
+                    
+                }
+                else
+                {
+                    total += u.getPayableAmount();
+                }
+            }
+               
+        }
+        average = total/num; 
+        System.out.println("Average Students fee: " + average);
     }
     
 
