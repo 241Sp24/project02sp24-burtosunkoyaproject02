@@ -33,9 +33,7 @@ public class StudentDriver {
             if(count < num){
                 a = file.nextLine().split(",");
                 UGStudent student = new UGStudent(a[1],Integer.parseInt(a[0]),Boolean.parseBoolean(a[2]),Boolean.parseBoolean(a[4]),Double.parseDouble(a[5]),Integer.parseInt(a[3])); 
-                students[count] = student;
-                //String studentName, int studentID, boolean isEnrolled,  boolean hasScholarship, 
-                //double scholarshipAmount, int coursesEnrolled
+                students[count] = student;                
             }else if(count < num2 + num){
                 a = file.nextLine().split(",");
                 if(a.length == 6){
@@ -45,19 +43,14 @@ public class StudentDriver {
                     GraduateStudent student = new GraduateStudent(a[1], Integer.parseInt(a[0]), Boolean.parseBoolean(a[2]), Boolean.parseBoolean(a[4]), "", Integer.parseInt(a[3]));
                     students[count] = student;
                 }
-                //String studentName, int studentID, boolean isEnrolled, boolean isGraduateAssistant,
-                //String GraduateAssistantType, int coursesEnrolled
             }else if (count < num3 + num2 + num){
                 a = file.nextLine().split(",");
                 OnlineStudent student = new OnlineStudent(a[1],Integer.parseInt(a[0]),Boolean.parseBoolean(a[2]),Integer.parseInt(a[3]));
                 
                 students[count] = student;
-                //tring studentName, int studentID, boolean isEnrolled, int noOfMonths) {
-                //super(studentName, studentID, isEnrolled
             }
             count += 1;
         }
-        
         count = 0;
         
         System.out.println("");
@@ -82,29 +75,88 @@ public class StudentDriver {
             count += 1;
         }
         
-        //Avg UG Student Fee
+        //UG Student Details
         System.out.println("**********Undergraduate Students details**********");
         
         double total = 0;
-        double average = 0;
+        double UGaverage;
+        int repeat = 0;
+        int scholarshipCount = 0;
+        int coursesCount = 0;
         
         for (StudentFees u: students)
         {
-            if (u instanceof UGStudent){
-                if (u.getPayableAmount()== 0)
+            if(u instanceof UGStudent){
+                if (((UGStudent) u).isHasScholarship())
                 {
-                    
-                }
-                else
-                {
-                    total += u.getPayableAmount();
+                    scholarshipCount ++;
                 }
             }
-               
+            if (u instanceof UGStudent){
+                if (((UGStudent) u).isIsEnrolled() == true)
+                {
+                    coursesCount += ((UGStudent) u).getCoursesEnrolled();
+                    total += u.getPayableAmount();
+                    repeat ++;
+                }
+            }
         }
-        average = total/num; 
-        System.out.println("Average Students fee: " + average);
+        UGaverage = total/repeat; 
+        System.out.printf("\nAverage Students fee %.2f\n", UGaverage);
+        System.out.println("Scholarship count: " + scholarshipCount);
+        System.out.println("Total number of courses: " + coursesCount);
+        
+        //Grad Student Details
+        System.out.println("\n**********Graduate Students details**********");
+        
+        total = 0;
+        double Gaverage;
+        repeat = 0;
+        scholarshipCount = 0;
+        coursesCount = 0;
+        
+        for (StudentFees g: students)
+        {
+            if(g instanceof GraduateStudent){
+                if (((GraduateStudent) g).isISGraduateAssistant())
+                {
+                    scholarshipCount ++;
+                }
+            }
+            if (g instanceof GraduateStudent){
+                if (((GraduateStudent) g).isIsEnrolled() == true)
+                {
+                    coursesCount += ((GraduateStudent) g).getCoursesEnrolled();
+                    total += g.getPayableAmount();
+                    repeat ++;
+                }
+            }
+        }
+        Gaverage = total/repeat;
+        System.out.printf("Average Students fee %.2f\n", Gaverage);
+        System.out.println("Graduate Assistantship count: " + scholarshipCount);
+        System.out.println("Total number of courses: " + coursesCount);
+        
+        //Online Student Details
+        System.out.println("\n**********Online Students details**********");
+        
+        total = 0;
+        double Oaverage;
+        repeat = 0;
+        
+        for (StudentFees o: students)
+        {
+            if (o instanceof OnlineStudent){
+                if (((OnlineStudent) o).isIsEnrolled() == true)
+                {
+                    coursesCount += ((OnlineStudent) o).getPayableAmount();
+                    total += o.getPayableAmount();
+                    repeat ++;
+                }
+            }
+        }
+        Oaverage = total/repeat; 
+        System.out.printf("Average Students fee %.2f\n", Oaverage);      
     }
-    
-
 }
+

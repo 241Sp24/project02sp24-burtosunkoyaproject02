@@ -45,10 +45,13 @@ public class GraduateStudent extends StudentFees {
         double amount = 0;
         if (GraduateAssistantType.equals("full"))
         {
-           amount = 0;
+           amount = ADDITIONAL_FEE;
         }
-        else {
-            amount = ((coursesEnrolled * getCREDITS_PER_COURSE() * getPER_CREDIT_Fee()) + ADDITIONAL_FEE) / 2;
+        else if (GraduateAssistantType.equals("half")){
+            amount = ((coursesEnrolled * getCREDITS_PER_COURSE() * getPER_CREDIT_Fee()) / 2) + ADDITIONAL_FEE;
+        }
+        else{
+            amount = ((coursesEnrolled * getCREDITS_PER_COURSE() * getPER_CREDIT_Fee())) + ADDITIONAL_FEE;
         }
         return amount;
     }
@@ -57,7 +60,7 @@ public class GraduateStudent extends StudentFees {
     {
         return "StudentName: " +getStudentName() + "\nStudentID: " + getStudentID() + "\nEnrolled: " + isIsEnrolled()
                 + "\nGraduate assistant: " + isGraduateAssistant + "\nGraduate assistant type: " + GraduateAssistantType
-                + "\nCourses Enrolled: " + coursesEnrolled + "\nPayable amount: " + getPayableAmount();
+                + "\nCourses Enrolled: " + coursesEnrolled + "\nPayable amount: " + String.format("%.2f", getPayableAmount());
     }  
     
 }
